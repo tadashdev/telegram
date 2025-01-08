@@ -52,11 +52,18 @@ def start_autotap(profile_url, tap_url, headers):
 profile_url = "https://app.blombard.com/api/v1/profile"
 tap_url = "https://app.blombard.com/api/v1/tap"
 
+clear_terminal()
+
+# Solicita o initdata ao usuário
+print(f"{Fore.CYAN}Por favor, insira o valor do initdata para iniciar:{Style.RESET_ALL}")
+user_initdata = input("initdata: ")
+
+# Configura os cabeçalhos com o initdata fornecido
 headers = {
     "accept": "application/json, text/plain, */*",
     "accept-language": "pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
     "if-none-match": "W/\"2ae-KufCIu3SAi1Ib8NqKKWBv12VWhw\"",
-    "initdata": "user=%7B%22id%22%3A6508132614%2C%22first_name%22%3A%22%F0%9D%95%BF%F0%9D%96%86%F0%9D%96%89%F0%9D%96%86%F0%9D%96%98%F0%9D%96%8D%20%F0%9D%95%BF%F0%9D%96%98%20%3C%5C%2F%3E%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22devtadash%22%2C%22language_code%22%3A%22pt-br%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FeA-L95HIk4r6u16jiAckEytNa4ZbIfPnXHN1CFDKeqd3LdfWezK_R7iYF4skCq66.svg%22%7D&chat_instance=7426196504867965132&chat_type=private&start_param=6508132614&auth_date=1736361198&signature=G_RwQGs2NIICJgt0MZYaZm4R1M9sJMfufm1rtYgQOSSszLGTbxjhQ8GXGLWA7brKFEM-BHPgSiaMQOTcpmgiBQ&hash=0d5c5a9b950ed4fb2e98609290c0b9f9d0952bbce60a94b925794e8fb65744ad",
+    "initdata": user_initdata,
     "priority": "u=1, i",
     "sec-ch-ua": "\"Microsoft Edge\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"",
     "sec-ch-ua-mobile": "?0",
@@ -64,8 +71,7 @@ headers = {
     "token": ""
 }
 
-clear_terminal()
-
+# Obter o perfil inicial
 profile_data = get_profile(profile_url, headers)
 
 if profile_data:
