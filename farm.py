@@ -58,18 +58,24 @@ def start_autotap(profile_url, tap_url, headers, account_name, line_positions, l
 
 def start_multicontas(profile_url, tap_url):
     clear_terminal()
-    print("Quantas contas deseja farmar?")
-    num_accounts = int(input("Quantidade: "))
+
+    # Lendo os initdata do arquivo contas.txt
+    if not os.path.exists('contas.txt'):
+        print(f"{Fore.RED}Arquivo 'contas.txt' não encontrado!{Style.RESET_ALL}")
+        return
+
+    with open('contas.txt', 'r') as f:
+        initdata_list = [line.strip() for line in f if line.strip()]
+
+    if not initdata_list:
+        print(f"{Fore.RED}Nenhum initdata encontrado no arquivo 'contas.txt'!{Style.RESET_ALL}")
+        return
 
     accounts = []
     line_positions = {}
     lock = Lock()  # Bloqueio para sincronizar atualizações
 
-    for i in range(1, num_accounts + 1):
-        clear_terminal()
-        print(f"Forneça o initdata para a conta {i}:")
-        initdata = input(f"initdata {i}: ")
-
+    for i, initdata in enumerate(initdata_list, start=1):
         headers = {
             "accept": "application/json, text/plain, */*",
             "accept-language": "pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
